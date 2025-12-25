@@ -14,8 +14,10 @@
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Image</th>
                     <th>Name</th>
                     <th>Car Model</th>
+                    <th>Price</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -24,8 +26,19 @@
                 {
                     <tr>
                         <td>@item.Id</td>
+                        <td>
+                            @if (!string.IsNullOrEmpty(item.ImageUrl))
+                            {
+                                <img src="@item.ImageUrl" alt="@item.Name" style="width: 60px; height: 60px; object-fit: cover;" />
+                            }
+                            else
+                            {
+                                <span class="text-muted">No image</span>
+                            }
+                        </td>
                         <td>@item.Name</td>
                         <td>@item.CarModel?.Name</td>
+                        <td>@item.Price.ToString("N0") VND</td>
                         <td>
                             <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-sm btn-info">Details</a>
                             <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-warning">Edit</a>

@@ -13,5 +13,12 @@ namespace Lab8.Models
 
         [ForeignKey(nameof(CarModelId))]
         public CarModel CarModel { get; set; } = null!;
+
+        public string? ImageUrl { get; set; }
+
+        public decimal Price { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

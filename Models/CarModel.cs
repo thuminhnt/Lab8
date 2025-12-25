@@ -17,9 +17,15 @@ namespace Lab8.Models
         public int BrandId { get; set; }
         public Brand Brand { get; set; } = null!;
 
+        public string? ImageUrl { get; set; }
+
         // Navigation 
         public ICollection<Car> Cars { get; set; } = new List<Car>();
 
+        [NotMapped]
         public string? BrandName { get; set; }
+
+        [NotMapped]
+        public IFormFile? ImageFile { get; set; }
     }
 }

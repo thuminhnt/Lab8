@@ -15,15 +15,15 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<IBrandRepository, BrandRepository>();
 builder.Services.AddScoped<ICarModelRepository, CarModelRepository>();
 builder.Services.AddScoped<ICarRepository, CarRepository>();
-//builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-//builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 //Services 
 builder.Services.AddScoped<IBrandService, BrandService>();
 builder.Services.AddScoped<ICarModelService, CarModelService>();
 builder.Services.AddScoped<ICarService, CarService>();
-//builder.Services.AddScoped<ICustomerService, CustomerService>();
-//builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Configure DbContext with SQL Server
 builder.Services.AddDbContext<ApplicationDbContext>(options =>

@@ -1,0 +1,103 @@
+@model Lab8.Models.Order
+
+@{
+    ViewData["Title"] = "Create Order";
+    var customers = ViewBag.Customers as IEnumerable<Lab8.Models.Customer>;
+    var cars = ViewBag.Cars as IEnumerable<Lab8.Models.Car>;
+}
+
+<h2>Create Order</h2>
+
+<hr />
+<div class="row">
+    <div class="col-md-8">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            
+            <div class="form-group mb-3">
+                <label asp-for="CustomerId" class="control-label">Customer</label>
+                <select asp-for="CustomerId" class="form-control">
+                    <option value="">-- Select Customer --</option>
+                    @if (customers != null)
+                    {
+                        @foreach (var customer in customers)
+                        {
+                            <option value="@customer.Id">@customer.Name - @customer.Phone</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="CustomerId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label class="control-label">Order Items</label>
+                <div id="orderItems">
+                    <div class="row mb-2 order-item">
+                        <div class="col-md-8">
+                            <select name="CarIds" class="form-control car-select">
+                                <option value="">-- Select Car --</option>
+                                @if (cars != null)
+                                {
+                                    @foreach (var car in cars)
+                                    {
+                                        <option value="@car.Id" data-price="@car.Price">@car.Name - @car.Price.ToString("N0") VND</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="number" name="Quantities" class="form-control" value="1" min="1" placeholder="Qty" />
+                        </div>
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-danger btn-remove-item" onclick="removeItem(this)">×</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-secondary btn-sm mt-2" onclick="addItem()">+ Add Item</button>
+            </div>
+
+            <div class="form-group mt-3">
+                <input type="submit" value="Create Order" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        function addItem() {
+            var itemHtml = `
+                <div class="row mb-2 order-item">
+                    <div class="col-md-8">
+                        <select name="CarIds" class="form-control car-select">
+                            <option value="">-- Select Car --</option>
+                            @if (cars != null)
+                            {
+                                @foreach (var car in cars)
+                                {
+                                    <option value="@car.Id" data-price="@car.Price">@car.Name - @car.Price.ToString("N0") VND</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="number" name="Quantities" class="form-control" value="1" min="1" placeholder="Qty" />
+                    </div>
+                    <div class="col-md-1">
+                        <button type="button" class="btn btn-danger btn-remove-item" onclick="removeItem(this)">×</button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('orderItems').insertAdjacentHTML('beforeend', itemHtml);
+        }
+
+        function removeItem(btn) {
+            var items = document.querySelectorAll('.order-item');
+            if (items.length > 1) {
+                btn.closest('.order-item').remove();
+            }
+        }
+    </script>
+}
